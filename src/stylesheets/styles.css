@@ -1,3 +1,5 @@
+@import "weather.css";
+
 .App {
   text-align: center;
 }
@@ -22,13 +24,17 @@ h3 {
   transform: translate(-50%, -50%);
 }
 
+.date-string {
+  margin-bottom:-3rem;
+  padding-bottom: -0.25rem;
+}
+
 .focus-input {
   font-size: 2rem;
   padding: 1rem;
   border: 0px;
   text-align: center;
   border-bottom: 2px solid black;
-  
 }
 
 .focus-input:focus {
