@@ -2,6 +2,39 @@
   text-align: center;
 }
 
+h1 {
+  font-size: 7rem;
+  margin: 2rem;
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+.center-page {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.focus-input {
+  font-size: 2rem;
+  padding: 1rem;
+  border: 0px;
+  text-align: center;
+  border-bottom: 2px solid black;
+  
+}
+
+.focus-input:focus {
+  outline: none;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -32,6 +65,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

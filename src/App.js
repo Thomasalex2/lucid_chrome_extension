@@ -1,25 +1,100 @@
-import logo from './logo.svg';
+import { useState, useEffect } from "react"
+import { imageUrl, imageAccessToken, weatherUrl, weatherAccessToken, userConfigs } from "./configs"
+import { saveAs } from 'file-saver'
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [bgImage, setBgImage] = useState("");
+    const [currentDate, setCurrentDate] = useState("")
+    const [currentTime, setCurrentTime] = useState("");
+    const [greeting, setGreeting] = useState("");
+    const [coordinates, setCoordinates] = useState({ latitude: -1, longitude: -1 });
+    const [weather, setWeather] = useState({});
+
+    const getCurrentTime = () => {
+        setCurrentTime(() => new Date().toLocaleTimeString('en-US', {
+            hour12: true,
+            hour: "numeric",
+            minute: "numeric"
+        }));
+    }
+
+    const getGreeting = () => {
+        const hour = new Date().getHours();
+        if (hour > 0 && hour < 4) {
+            setGreeting("Time to sleep");
+        } else if (hour > 4 && hour < 12) {
+            setGreeting("Good Morning");
+        } else if (hour < 18) {
+            setGreeting("Good Afternoon");
+        } else {
+            setGreeting("Good Evening");
+        }
+    }
+
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } else {
+            setCoordinates({ latitude: -1, longitude: -1 });
+            console.log("Unable to determine location");
+        }
+    }
+
+
+    const showPosition = (position) => {
+        setCoordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+        console.log("Coordinates: ", position.coords.latitude, position.coords.longitude);
+    }
+
+    setInterval(getCurrentTime, 1000);
+    setInterval(getGreeting, 1000);
+
+    useEffect(() => getLocation(), []);
+
+    useEffect(() => {
+        async function getWeather() {
+            const res = await (await fetch(`${weatherUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${weatherAccessToken}`)).json();
+            // console.log(`${weatherUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${weatherAccessToken}`)
+            console.log(res)
+            const location = res.name;
+            const currentTemperature = res.main.temp;
+            const currentHumidity = res.main.humidity;
+            const description = res.weather[0].description;
+            const icon = res.weather[0].icon;
+            setWeather({ location: location, temperature: currentTemperature, humidity: currentHumidity, description: description, icon: icon });
+        }
+        getWeather()
+    }, [])
+
+    // useEffect(() => {
+    //   async function getBgImage() {
+    //     const res = await (await fetch(`${imageUrl}?${accessToken}`)).json();
+    //     const imgUrl = res.urls.raw + "&w=1920&h=1080&dpr=2";
+    //     const description = res.description;
+    //     console.log(res);
+    //     console.log(imgUrl, description);
+    //   }
+    //   getBgImage()
+    // }, [])
+
+    return (
+        <div className="App">
+            <section className="center-page">
+                <h1>{currentTime}</h1>
+                <h2> {greeting}, {userConfigs.name} </h2>
+                <h3> What is your focus today?</h3>
+                <input className="focus-input" type="text" />
+            </section>
+            <section className="weather-section" tooltip={weather.description}>
+                <h4>{weather.location}</h4>
+                <h4>{weather.temperature}° {userConfigs.units === "metric" ? "C" : "F"}</h4>
+                <h4>{weather.humidity}% humidity</h4>
+                <span className="tooltip-text">{weather.description}</span>
+            </section>
+        </div>
+    );
 }
 
 export default App;
