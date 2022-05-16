@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
-import { imageUrl, imageAccessToken, weatherUrl, weatherAccessToken, userConfigs } from "./configs"
+import { imageUrl, imageAccessToken, weatherUrl, weatherAccessToken, weatherLinkUrl, userConfigs } from "./configs"
 import { saveAs } from 'file-saver'
-import './App.css';
+import './stylesheets/styles.css';
 
 function App() {
 
@@ -22,13 +22,13 @@ function App() {
 
     const getGreeting = () => {
         const hour = new Date().getHours();
-        if (hour > 0 && hour < 4) {
+        if (hour >= 0 && hour < 4) {
             setGreeting("Time to sleep");
-        } else if (hour > 4 && hour < 12) {
+        } else if (hour >= 4 && hour < 12) {
             setGreeting("Good Morning");
-        } else if (hour < 18) {
+        } else if (hour >= 12 && hour < 15) {
             setGreeting("Good Afternoon");
-        } else {
+        } else if (hour >= 15 && hour < 24) {
             setGreeting("Good Evening");
         }
     }
@@ -56,14 +56,14 @@ function App() {
     useEffect(() => {
         async function getWeather() {
             const res = await (await fetch(`${weatherUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${weatherAccessToken}`)).json();
-            // console.log(`${weatherUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${weatherAccessToken}`)
             console.log(res)
             const location = res.name;
             const currentTemperature = res.main.temp;
             const currentHumidity = res.main.humidity;
-            const description = res.weather[0].description;
+            const description = res.weather[0].main;
             const icon = res.weather[0].icon;
-            setWeather({ location: location, temperature: currentTemperature, humidity: currentHumidity, description: description, icon: icon });
+            const id = res.id;
+            setWeather({ location: location, temperature: currentTemperature, humidity: currentHumidity, description: description, icon: icon, id: id });
         }
         getWeather()
     }, [])
@@ -87,11 +87,18 @@ function App() {
                 <h3> What is your focus today?</h3>
                 <input className="focus-input" type="text" />
             </section>
+
             <section className="weather-section" tooltip={weather.description}>
-                <h4>{weather.location}</h4>
-                <h4>{weather.temperature}° {userConfigs.units === "metric" ? "C" : "F"}</h4>
-                <h4>{weather.humidity}% humidity</h4>
-                <span className="tooltip-text">{weather.description}</span>
+                <a href={`${weatherLinkUrl}${weather.id}`} target="_blank" rel="noreferrer">
+                    <div className="weather-stats">
+                        <img className="weather-icon" src={`/icons/${weather.icon}.png`} alt="weather icon" />
+                        <div className="weather-info">
+                            <p className="weather-text">{weather.temperature}° {userConfigs.units === "metric" ? "C" : "F"} | {weather.humidity}%</p>
+                            <p className="weather-text location">{weather.location}</p>
+                            <span className="weather-text tooltip-text">{weather.description}</span>
+                        </div>
+                    </div>
+                </a>
             </section>
         </div>
     );
