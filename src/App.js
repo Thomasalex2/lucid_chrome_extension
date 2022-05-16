@@ -20,6 +20,15 @@ function App() {
         }));
     }
 
+    const getCurrentDate = () => {
+        setCurrentDate(() => new Date().toLocaleDateString("en-gb", {
+            weekday: "long",
+            year: "numeric",
+            month: "short",
+            day: "numeric"
+        }));
+    }
+
     const getGreeting = () => {
         const hour = new Date().getHours();
         if (hour >= 0 && hour < 4) {
@@ -49,6 +58,7 @@ function App() {
     }
 
     setInterval(getCurrentTime, 1000);
+    setInterval(getCurrentDate, 1000);
     setInterval(getGreeting, 1000);
 
     useEffect(() => getLocation(), []);
@@ -82,7 +92,8 @@ function App() {
     return (
         <div className="App">
             <section className="center-page">
-                <h1>{currentTime}</h1>
+                <h3 className="date-string">{currentDate}</h3>
+                <h1 className="time-string">{currentTime}</h1>
                 <h2> {greeting}, {userConfigs.name} </h2>
                 <h3> What is your focus today?</h3>
                 <input className="focus-input" type="text" />
