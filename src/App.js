@@ -3,6 +3,8 @@ import { imageUrl, imageAccessToken, weatherUrl, weatherAccessToken, weatherLink
 import { saveAs } from 'file-saver'
 import './stylesheets/styles.css';
 
+const Quotes = require("randomquote-api");
+
 function App() {
 
     const [bgImage, setBgImage] = useState("");
@@ -11,6 +13,7 @@ function App() {
     const [greeting, setGreeting] = useState("");
     const [coordinates, setCoordinates] = useState({ latitude: -1, longitude: -1 });
     const [weather, setWeather] = useState({});
+    const [quote, setQuote] = useState({});
 
     const getCurrentTime = () => {
         setCurrentTime(() => new Date().toLocaleTimeString('en-US', {
@@ -57,6 +60,11 @@ function App() {
         console.log("Coordinates: ", position.coords.latitude, position.coords.longitude);
     }
 
+    const getQuote = () => {
+        const randomQuote = Quotes.randomQuote();
+        setQuote(randomQuote);
+    }
+
     setInterval(getCurrentTime, 1000);
     setInterval(getCurrentDate, 1000);
     setInterval(getGreeting, 1000);
@@ -66,7 +74,6 @@ function App() {
     useEffect(() => {
         async function getWeather() {
             const res = await (await fetch(`${weatherUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${weatherAccessToken}`)).json();
-            console.log(res)
             const location = res.name;
             const currentTemperature = res.main.temp;
             const currentHumidity = res.main.humidity;
@@ -74,9 +81,12 @@ function App() {
             const icon = res.weather[0].icon;
             const id = res.id;
             setWeather({ location: location, temperature: currentTemperature, humidity: currentHumidity, description: description, icon: icon, id: id });
+            console.log("Requesting Weather")
         }
         getWeather()
-    }, [])
+    }, [coordinates.latitude, coordinates.longitude, currentTime])
+
+    useEffect(() => getQuote(), [])
 
     // useEffect(() => {
     //   async function getBgImage() {
@@ -110,6 +120,10 @@ function App() {
                         </div>
                     </div>
                 </a>
+            </section>
+            <section className="quote-section">
+                <p className="quote-text"><i>{quote.quote}</i></p>
+                <small className="quote-author">-{quote.author}</small><br />
             </section>
         </div>
     );
