@@ -6,21 +6,20 @@ export const WeatherComponent = () => {
     const [coordinates, setCoordinates] = useState({ latitude: -1, longitude: -1 });
     const [weather, setWeather] = useState({});
 
-    const getLocation = () => {
+    const showPosition = (position) => {
+        setCoordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+        console.log("Coordinates: ", position.coords.latitude, position.coords.longitude);
+    }
+
+    useEffect(() => {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
         } else {
             setCoordinates({ latitude: -1, longitude: -1 });
             console.log("Unable to determine location");
         }
-    }
+    }, []);
 
-    const showPosition = (position) => {
-        setCoordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-        console.log("Coordinates: ", position.coords.latitude, position.coords.longitude);
-    }
-
-    useEffect(() => getLocation(), []);
     useEffect(() => {
         async function getWeather() {
             console.log("Requesting Weather")
