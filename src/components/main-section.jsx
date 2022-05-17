@@ -7,6 +7,9 @@ export const MainSection = () => {
     const [currentTime, setCurrentTime] = useState("");
     const [greeting, setGreeting] = useState("");
 
+    const [task, setTask] = useState("");
+    const [showTaskField, setShowTaskField] = useState(true);
+
     const getCurrentTime = () => {
         setCurrentTime(() => new Date().toLocaleTimeString('en-US', {
             hour12: true,
@@ -30,11 +33,15 @@ export const MainSection = () => {
             setGreeting("Time to sleep");
         } else if (hour >= 4 && hour < 12) {
             setGreeting("Good Morning");
-        } else if (hour >= 12 && hour < 15) {
+        } else if (hour >= 12 && hour < 16) {
             setGreeting("Good Afternoon");
-        } else if (hour >= 15 && hour < 24) {
+        } else if (hour >= 16 && hour < 24) {
             setGreeting("Good Evening");
         }
+    }
+
+    const saveTask = (item) => {
+        console.log(item);
     }
 
     setInterval(getCurrentTime, 1000);
@@ -47,7 +54,7 @@ export const MainSection = () => {
             <h1 className="time-string">{currentTime}</h1>
             <h2> {greeting}, {userConfigs.name} </h2>
             <h3> What is your focus today?</h3>
-            <input className="focus-input" type="text" />
+            {showTaskField && <input className="focus-input" type="text" onKeyDown={(e) => e.key === "Enter" ? saveTask(e.target.value) : null} />}
         </>
     )
 }

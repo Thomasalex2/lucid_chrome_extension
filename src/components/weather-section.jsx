@@ -3,7 +3,7 @@ import { urls, apiKeys, userConfigs } from "../configs"
 
 export const WeatherComponent = () => {
     
-    const [coordinates, setCoordinates] = useState({ latitude: -1, longitude: -1 });
+    const [coordinates, setCoordinates] = useState({ latitude: -10, longitude: -10 });
     const [weather, setWeather] = useState({});
 
     const showPosition = (position) => {
@@ -25,7 +25,8 @@ export const WeatherComponent = () => {
             console.log("Requesting Weather")
             try {
                 const res = await (await fetch(`${urls.weatherApiUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${apiKeys.weatherAccessToken}`)).json();
-                console.log(res);
+                // console.log(`${urls.weatherApiUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${apiKeys.weatherAccessToken}`)
+                // console.log(res);
                 const location = res.name;
                 const currentTemperature = res.main.temp;
                 const currentHumidity = res.main.humidity;

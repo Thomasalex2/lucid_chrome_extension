@@ -1,5 +1,6 @@
 .quote-section {
     display: inline-block;
+    max-width: 70vw;
 }
 
 .quote-text {

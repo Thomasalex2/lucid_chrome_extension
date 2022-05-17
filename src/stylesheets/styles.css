@@ -32,8 +32,13 @@ a {
 }
 
 .date-string {
-  margin-bottom:-3rem;
+  margin-bottom:-1rem;
   padding-bottom: -0.25rem;
+}
+
+.time-string {
+  margin-top: 0rem;
+  padding-top: 0rem;
 }
 
 .focus-input {
