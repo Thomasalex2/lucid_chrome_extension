@@ -1,5 +1,6 @@
 @import "weather.css";
 @import "quote.css";
+@import "vocabulary.css";
 
 .App {
   text-align: center;
@@ -16,6 +17,11 @@ h2 {
 
 h3 {
   font-size: 2rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
 }
 
 .center-page {

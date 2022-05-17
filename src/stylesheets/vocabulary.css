@@ -1,0 +1,43 @@
+.vocab-section {
+    position: relative;
+    text-align: left;
+}
+
+.vocab-title {
+    margin: 0.1rem 0rem;
+    padding: 0.1rem 0rem;
+    font-weight: bold;
+}
+
+.vocab-text {
+    position: fixed;
+    bottom: 4%;
+    left: 1%;
+    transform: translate(-1%, -1%);
+}
+
+.vocab-word {
+    font-weight: bold;
+}
+
+.vocab-definition {
+    opacity: 0%;
+}
+
+.vocab-example {
+    opacity: 0%;
+}
+
+.vocab-word:hover {
+    cursor: pointer;
+}
+
+.vocab-word:hover ~ .vocab-definition {
+    opacity: 100%;
+    transition: opacity 0.5s;
+}
+
+.vocab-word:hover ~ .vocab-example {
+    opacity: 100%;
+    transition: opacity 0.5s;
+}
