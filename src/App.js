@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react"
-import { imageUrl, imageAccessToken, weatherUrl, weatherAccessToken, weatherLinkUrl, userConfigs } from "./configs"
+// import { imageUrl, imageAccessToken, weatherUrl, weatherAccessToken, weatherLinkUrl, userConfigs } from "./configs"
+import { urls, apiKeys, userConfigs } from "./configs"
 import { saveAs } from 'file-saver'
 import './stylesheets/styles.css';
+
+
 
 function App() {
 
@@ -11,6 +14,8 @@ function App() {
     const [greeting, setGreeting] = useState("");
     const [coordinates, setCoordinates] = useState({ latitude: -1, longitude: -1 });
     const [weather, setWeather] = useState({});
+    const [quote, setQuote] = useState({});
+    const [vocab, setVocab] = useState({});
 
     const getCurrentTime = () => {
         setCurrentTime(() => new Date().toLocaleTimeString('en-US', {
@@ -57,6 +62,18 @@ function App() {
         console.log("Coordinates: ", position.coords.latitude, position.coords.longitude);
     }
 
+    const getQuote = () => {
+        const Quotes = require("randomquote-api");
+        const randomQuote = Quotes.randomQuote();
+        setQuote(randomQuote);
+    }
+
+    const getVocab = () => {
+        const vocabList = require("./word_list/words.json");
+        const randomVocab = vocabList[Math.floor(Math.random() * vocabList.length)];
+        setVocab(randomVocab);
+    }
+
     setInterval(getCurrentTime, 1000);
     setInterval(getCurrentDate, 1000);
     setInterval(getGreeting, 1000);
@@ -65,8 +82,7 @@ function App() {
 
     useEffect(() => {
         async function getWeather() {
-            const res = await (await fetch(`${weatherUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${weatherAccessToken}`)).json();
-            console.log(res)
+            const res = await (await fetch(`${urls.weatherApiUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${apiKeys.weatherAccessToken}`)).json();
             const location = res.name;
             const currentTemperature = res.main.temp;
             const currentHumidity = res.main.humidity;
@@ -74,13 +90,17 @@ function App() {
             const icon = res.weather[0].icon;
             const id = res.id;
             setWeather({ location: location, temperature: currentTemperature, humidity: currentHumidity, description: description, icon: icon, id: id });
+            console.log("Requesting Weather")
         }
         getWeather()
-    }, [])
+    }, [coordinates.latitude, coordinates.longitude, currentTime])
+
+    useEffect(() => getQuote(), [])
+    useEffect(() => getVocab(), [])
 
     // useEffect(() => {
     //   async function getBgImage() {
-    //     const res = await (await fetch(`${imageUrl}?${accessToken}`)).json();
+    //     const res = await (await fetch(`${urls.imageApiUrl}?${apiKeys.imageAccessToken}`)).json();
     //     const imgUrl = res.urls.raw + "&w=1920&h=1080&dpr=2";
     //     const description = res.description;
     //     console.log(res);
@@ -100,7 +120,7 @@ function App() {
             </section>
 
             <section className="weather-section" tooltip={weather.description}>
-                <a href={`${weatherLinkUrl}${weather.id}`} target="_blank" rel="noreferrer">
+                <a href={`${urls.weatherUserUrl}${weather.id}`} target="_blank" rel="noreferrer">
                     <div className="weather-stats">
                         <img className="weather-icon" src={`/icons/${weather.icon}.png`} alt="weather icon" />
                         <div className="weather-info">
@@ -109,6 +129,19 @@ function App() {
                             <span className="weather-text tooltip-text">{weather.description}</span>
                         </div>
                     </div>
+                </a>
+            </section>
+
+            <section className="quote-section">
+                <p className="quote-text"><i>{quote.quote}</i></p>
+                <small className="quote-author">-{quote.author}</small><br />
+            </section>
+
+            <section className="vocab-section">
+                <a className="vocab-text" href={`${urls.dictionaryUserUrl}${vocab.word}`} target="_blank" rel="noreferrer">
+                    <small className="vocab-word">{vocab.word}:&nbsp;&nbsp;</small>
+                    <small className="vocab-definition">{vocab.meaning}</small><br/>
+                    <small className="vocab-example"><i><b>Usage:&nbsp;</b>{vocab.sentence}</i></small>
                 </a>
             </section>
         </div>
