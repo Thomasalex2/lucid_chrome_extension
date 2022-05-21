@@ -18,8 +18,9 @@ export const TaskComponent = () => {
 
     const saveTask = (item) => {
         const itemsArray = item.split(";");
-        itemsArray.map(item => item.trim());
-        setTaskList(() => [...taskList, ...itemsArray]);
+        const formattedItemsArray = itemsArray.map(item => item.trim());
+        console.log(formattedItemsArray)
+        setTaskList(() => [...taskList, ...formattedItemsArray]);
         setTaskText("");
         setShowTaskInputField(() => false);
     }
@@ -27,6 +28,21 @@ export const TaskComponent = () => {
     const clearAllTasks = () => {
         setTaskList(() => []);
         setShowTaskInputField(() => true);
+    }
+
+    const handleTask = (e) => {
+        if (e.target.checked) {
+            const newTaskList = JSON.parse(localStorage.getItem("taskList"));
+            const index = newTaskList.indexOf(e.target.value);
+            newTaskList.splice(index, 1);
+            localStorage.setItem("taskList", JSON.stringify(newTaskList))
+            console.log(e.target.value, " task removed");
+        } else {
+            const newTaskList = JSON.parse(localStorage.getItem("taskList"));
+            newTaskList.push(e.target.value);
+            localStorage.setItem("taskList", JSON.stringify(newTaskList))
+            console.log(e.target.value, " task re-added");
+        }
     }
 
     if (showTaskInputField) {
@@ -43,7 +59,7 @@ export const TaskComponent = () => {
                 <div className="task-box">
                     {taskList.map((item) => 
                         <div className="checkList" key={item}>
-                            <input value={item} type="checkbox" /><span>{item}</span>
+                            <input value={item} type="checkbox" onClick={handleTask} /><span className="item-text">{item}</span>
                         </div>
                     )}
                 </div>

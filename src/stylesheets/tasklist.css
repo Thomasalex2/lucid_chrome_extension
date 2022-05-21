@@ -32,3 +32,8 @@
     justify-content: center;
     gap: 20px;
 }
+
+.strike-task {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
