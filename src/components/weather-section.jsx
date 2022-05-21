@@ -2,9 +2,10 @@ import { useState, useEffect } from "react";
 import { urls, apiKeys, userConfigs } from "../configs"
 
 export const WeatherComponent = () => {
-    
+
     const [coordinates, setCoordinates] = useState({ latitude: -10, longitude: -10 });
     const [weather, setWeather] = useState({});
+    const [showWeather, setShowWeather] = useState(true);
 
     const showPosition = (position) => {
         setCoordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
@@ -34,24 +35,32 @@ export const WeatherComponent = () => {
                 const icon = res.weather[0].icon;
                 const id = res.id;
                 setWeather({ location: location, temperature: currentTemperature, humidity: currentHumidity, description: description, icon: icon, id: id });
+                setShowWeather(true);
             } catch (error) {
                 console.log("Error: ", error);
+                setShowWeather(false);
             }
 
         }
         getWeather()
-    }, [coordinates.latitude, coordinates.longitude])
+        const weatherInterval = setInterval(() => getWeather(), 10000);
+        return () => clearInterval(weatherInterval);
+    }, [coordinates.latitude, coordinates.longitude]);
 
     return (
-        <a href={`${urls.weatherUserUrl}${weather.id}`} target="_blank" rel="noreferrer">
-            <div className="weather-stats">
-                <img className="weather-icon" src={`./icons/${weather.icon}.png`} alt="weather icon" />
-                <div className="weather-info">
-                    <p className="weather-text">{weather.temperature}° {userConfigs.units === "metric" ? "C" : "F"} | {weather.humidity}%</p>
-                    <p className="weather-text location">{weather.location}</p>
-                    <span className="weather-text tooltip-text">{weather.description}</span>
-                </div>
-            </div>
-        </a>
+        <>
+            {showWeather &&
+                <a href={`${urls.weatherUserUrl}${weather.id}`} target="_blank" rel="noreferrer">
+                    <div className="weather-stats">
+                        <img className="weather-icon" src={`./icons/${weather.icon}.png`} alt="weather icon" />
+                        <div className="weather-info">
+                            <p className="weather-text">{parseInt(weather.temperature)}° {userConfigs.units === "metric" ? "C" : "F"} | {weather.humidity}%</p>
+                            <p className="weather-text location">{weather.location}</p>
+                            <span className="weather-text tooltip-text">{weather.description}</span>
+                        </div>
+                    </div>
+                </a>
+            }
+        </>
     )
 }
