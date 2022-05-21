@@ -2,7 +2,8 @@ import { useState, useEffect } from "react"
 import { saveAs } from 'file-saver'
 import './stylesheets/styles.css';
 
-import { MainSection } from "./components/main-section"
+import { MainSection } from "./components/main-section";
+import { TaskComponent } from "./components/task-section";
 import { WeatherComponent } from "./components/weather-section";
 import { VocabularyComponent } from "./components/vocabulary-section";
 import { QuoteComponent } from "./components/quote-section";
@@ -17,7 +18,8 @@ function App() {
     return (
         <div className="App">
             <section className="center-page">
-                <MainSection/>
+                <MainSection />
+                <TaskComponent />
             </section>
 
             <section className="weather-section">
