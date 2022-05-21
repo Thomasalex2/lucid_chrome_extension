@@ -10,6 +10,11 @@
     outline: none;
 }
 
+.task-box {
+    max-height: 10rem;
+    overflow: auto;
+}
+
 .checkList {
     padding-left: 8rem;
     text-align: left;

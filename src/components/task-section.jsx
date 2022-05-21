@@ -40,11 +40,13 @@ export const TaskComponent = () => {
         return (
             <>
                 <h3> Your tasks for today:</h3>
-                {taskList.map((item) => 
-                    <div className="checkList" key={item}>
-                        <input value={item} type="checkbox" /><span>{item}</span>
-                    </div>
-                )}
+                <div className="task-box">
+                    {taskList.map((item) => 
+                        <div className="checkList" key={item}>
+                            <input value={item} type="checkbox" /><span>{item}</span>
+                        </div>
+                    )}
+                </div>
                 <div className="task-btn-container">
                     <button onClick={() => setShowTaskInputField(() => true)}><span className="material-icons">add</span>&nbsp; Add Task</button>
                     <button onClick={() => clearAllTasks()}><span className="material-icons">close</span>&nbsp; Clear all Tasks</button>
