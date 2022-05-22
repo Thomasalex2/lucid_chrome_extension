@@ -8,10 +8,11 @@ const userSchema = yup.object().shape({
     "showQuote": yup.bool().required(),
     "showVocab": yup.bool().required(),
     "showWeather": yup.bool().required(),
+    "showImage": yup.bool().required(),
 });
 
 const UserPreferencesProvider = ({ children }) => {
-    const initialSettingsState = { "name": "", "showQuote": false, "showVocab": false, "showWeather": false };
+    const initialSettingsState = { "name": "", "showQuote": false, "showVocab": false, "showWeather": false, "showImage": false };
     const [userPreferences, setUserPreferences] = useState({});
     const [showSettingsPage, setShowSettingsPage] = useState(false);
     const [inputPref, setInputPref] = useState(initialSettingsState);
@@ -35,6 +36,9 @@ const UserPreferencesProvider = ({ children }) => {
                         </div><br />
                         <div>
                             <input type="checkbox" label="Display Local Weather" defaultChecked={inputPref.showWeather} onChange={e => setInputPref({ ...inputPref, "showWeather": e.target.checked })}  /><span>Display Local Weather</span>
+                        </div><br />
+                        <div>
+                            <input type="checkbox" label="Display Background Image" defaultChecked={inputPref.showImage} onChange={e => setInputPref({ ...inputPref, "showImage": e.target.checked })} /><span>Display Background Image</span>
                         </div><br />
                         <button className="save-btn" onClick={saveNewUserPreferences}>Save Preferences</button>
                     </div>
@@ -76,7 +80,8 @@ const UserPreferencesProvider = ({ children }) => {
             "name": inputPref.name,
             "showQuote": inputPref.showQuote,
             "showVocab": inputPref.showVocab,
-            "showWeather": inputPref.showWeather
+            "showWeather": inputPref.showWeather,
+            "showImage": inputPref.showImage
         }
         setUserPreferences(() => newUserSettings)
         console.log("Saved new user preferences", newUserSettings);
