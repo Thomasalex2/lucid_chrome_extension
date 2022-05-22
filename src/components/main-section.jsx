@@ -1,14 +1,12 @@
-import { userConfigs } from "../configs"
 import { useState } from "react"
+import { useUserPreferences } from "../contexts/user-pref-context";
 
 export const MainSection = () => {
 
     const [currentDate, setCurrentDate] = useState("")
     const [currentTime, setCurrentTime] = useState("");
     const [greeting, setGreeting] = useState("");
-
-    const [task, setTask] = useState("");
-    const [showTaskField, setShowTaskField] = useState(true);
+    const { userPreferences } = useUserPreferences()
 
     const getCurrentTime = () => {
         setCurrentTime(() => new Date().toLocaleTimeString('en-US', {
@@ -40,10 +38,6 @@ export const MainSection = () => {
         }
     }
 
-    const saveTask = (item) => {
-        console.log(item);
-    }
-
     setInterval(getCurrentTime, 1000);
     setInterval(getCurrentDate, 1000);
     setInterval(getGreeting, 1000);
@@ -52,9 +46,7 @@ export const MainSection = () => {
         <>
             <h3 className="date-string">{currentDate}</h3>
             <h1 className="time-string">{currentTime}</h1>
-            <h2> {greeting}, {userConfigs.name} </h2>
-            <h3> What is your focus today?</h3>
-            {showTaskField && <input className="focus-input" type="text" onKeyDown={(e) => e.key === "Enter" ? saveTask(e.target.value) : null} />}
+            <h2> {greeting}, {userPreferences.name} </h2>
         </>
     )
 }
