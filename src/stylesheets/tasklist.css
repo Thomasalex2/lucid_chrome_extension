@@ -1,13 +1,6 @@
 .focus-input {
     font-size: 2rem;
     padding: 1rem;
-    border: 0px;
-    text-align: center;
-    border-bottom: 2px solid var(--text-color);
-}
-
-.focus-input:focus {
-    outline: none;
 }
 
 .task-box {

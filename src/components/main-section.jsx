@@ -1,11 +1,12 @@
-import { userConfigs } from "../configs"
 import { useState } from "react"
+import { useUserPreferences } from "../contexts/user-pref-context";
 
 export const MainSection = () => {
 
     const [currentDate, setCurrentDate] = useState("")
     const [currentTime, setCurrentTime] = useState("");
     const [greeting, setGreeting] = useState("");
+    const { userPreferences } = useUserPreferences()
 
     const getCurrentTime = () => {
         setCurrentTime(() => new Date().toLocaleTimeString('en-US', {
@@ -45,7 +46,7 @@ export const MainSection = () => {
         <>
             <h3 className="date-string">{currentDate}</h3>
             <h1 className="time-string">{currentTime}</h1>
-            <h2> {greeting}, {userConfigs.name} </h2>
+            <h2> {greeting}, {userPreferences.name} </h2>
         </>
     )
 }
