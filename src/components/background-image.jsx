@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { urls } from "../configs"
+import { urls } from "../data_sources"
 
 export const BackgroundImageLoader = () => {
 

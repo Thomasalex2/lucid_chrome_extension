@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { urls, apiKeys, userConfigs } from "../configs"
+import { urls } from "../data_sources"
 
 export const WeatherComponent = () => {
 
@@ -25,8 +25,8 @@ export const WeatherComponent = () => {
         async function getWeather() {
             console.log("Requesting Weather")
             try {
-                const res = await (await fetch(`${urls.weatherApiUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${apiKeys.weatherAccessToken}`)).json();
-                // console.log(`${urls.weatherApiUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${apiKeys.weatherAccessToken}`)
+                const res = await (await fetch(`${urls.weatherApiUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}`)).json();
+                // console.log(`${ urls.weatherApiUrl }lat = ${ coordinates.latitude } & lon=${ coordinates.longitude }`)
                 // console.log(res);
                 const location = res.name;
                 const currentTemperature = res.main.temp;
@@ -54,7 +54,7 @@ export const WeatherComponent = () => {
                     <div className="weather-stats">
                         <img className="weather-icon" src={`./icons/${weather.icon}.png`} alt="weather icon" />
                         <div className="weather-info">
-                            <p className="weather-text">{parseInt(weather.temperature)}° {userConfigs.units === "metric" ? "C" : "F"} | {weather.humidity}%</p>
+                            <p className="weather-text">{parseInt(weather.temperature)}°C | {weather.humidity}%</p>
                             <p className="weather-text location">{weather.location}</p>
                             <span className="weather-text tooltip-text">{weather.description}</span>
                         </div>
