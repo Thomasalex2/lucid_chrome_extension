@@ -10,8 +10,6 @@ import { BackgroundImageLoader } from "./components/background-image";
 
 import { useUserPreferences } from "./contexts/user-pref-context";
 
-
-
 function App() {
 
     const { showSettingsPage, userSettingsPage, userPreferences } = useUserPreferences();
@@ -62,7 +60,6 @@ function App() {
             </div>
         );
     }
-
 }
 
 export default App;

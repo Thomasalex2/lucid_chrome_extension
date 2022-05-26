@@ -3,7 +3,7 @@ import { useUserPreferences } from "../contexts/user-pref-context";
 
 export const MainSection = () => {
 
-    const [currentDate, setCurrentDate] = useState("")
+    const [currentDate, setCurrentDate] = useState("");
     const [currentTime, setCurrentTime] = useState("");
     const [greeting, setGreeting] = useState("");
     const { userPreferences } = useUserPreferences()
