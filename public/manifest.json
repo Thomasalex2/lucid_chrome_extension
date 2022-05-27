@@ -4,10 +4,12 @@
   "author": "Thomas Alex",
   "version": "1.0.0",
   "description": "Replace Chrome new tab with beautiful Lucid Tab Screen",
-  "icons": [{
-    "src":"LUCID_Tab_128.ico",
-    "sizes": "128x128 32x32 24x24 16x16"
-  }],
+  "icons": {
+    "16": "Lucid_logo_16.png",
+    "32": "Lucid_logo_32.png",
+    "48": "Lucid_logo_48.png",
+    "128": "Lucid_logo_128.png"
+  },
   "chrome_url_overrides": {
     "newtab": "index.html"
   }

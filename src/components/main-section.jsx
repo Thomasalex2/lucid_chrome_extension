@@ -3,9 +3,18 @@ import { useUserPreferences } from "../contexts/user-pref-context";
 
 export const MainSection = () => {
 
-    const [currentDate, setCurrentDate] = useState("");
-    const [currentTime, setCurrentTime] = useState("");
-    const [greeting, setGreeting] = useState("");
+    const [currentDate, setCurrentDate] = useState(new Date().toLocaleDateString("en-gb", {
+        weekday: "long",
+        year: "numeric",
+        month: "short",
+        day: "numeric"
+    }));
+    const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-US', {
+        hour12: true,
+        hour: "numeric",
+        minute: "numeric"
+    }));
+    const [greeting, setGreeting] = useState("... ");
     const { userPreferences } = useUserPreferences()
 
     const getCurrentTime = () => {
