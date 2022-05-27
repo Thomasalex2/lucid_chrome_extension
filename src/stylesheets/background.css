@@ -1,0 +1,41 @@
+body {
+    margin: 0;
+    height: 100vh;
+    font-weight: 100;
+    color: var(--text-color);
+}
+
+.gradient-color {
+    background: linear-gradient(-45deg, #e859da, #ee7752, #e73c7e, #23a6d5, #23d5ab, #23d56d);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+.custom-image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+a {
+    color: var(--text-color);
+}
+
+input {
+    background-color: inherit;
+    color: var(--text-color);
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}

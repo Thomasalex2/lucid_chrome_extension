@@ -1,0 +1,30 @@
+.weather-section {
+    position: relative;
+}
+
+.weather-icon {
+    max-width: 4rem;
+    margin: 0.25rem;
+    padding: 0rem;
+}
+
+.weather-stats {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display:flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.weather-text {
+    margin:0.25rem;
+}
+
+.location {
+    font-weight: bold;
+}
+
+.weather-section a, a:visited, a:hover {
+    text-decoration: none;
+}

@@ -1,0 +1,15 @@
+.quote-section {
+    display: inline-block;
+    max-width: 70vw;
+}
+
+.quote-text {
+    margin-top: 2rem;
+    margin-bottom: 0rem;
+}
+
+.quote-author {
+    font-weight: bold;
+    margin-top: -2rem;
+    padding-top: 0rem;
+}

@@ -1,0 +1,54 @@
+.settings-icon-container {
+    position: relative;
+}
+
+.settings-icon {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    cursor: pointer;
+}
+
+.settings-icon:hover {
+    transform: rotate(90deg);
+    transition-duration: 1s;
+}
+
+.settings-icon:not(:hover) {
+    transform: rotate(0deg);
+    transition-duration: 1s;
+}
+
+.settings-page {
+    text-align: center;
+
+}
+
+.settings-option {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.user-pref-name {
+    display: inline;
+    margin: 2rem 2rem;
+    padding: 2rem 0rem;
+}
+
+.save-btn {
+    width: 15%;
+    margin: 1rem auto;
+    padding: 1rem 2rem;
+}
+
+.ext-footer {
+    position: relative;
+    text-align: center;
+}
+
+.footer-contents {
+    position: fixed;
+    bottom: 2rem;
+    width: 100%;
+}

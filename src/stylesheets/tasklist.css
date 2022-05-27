@@ -1,0 +1,32 @@
+.focus-input {
+    font-size: 2rem;
+    padding: 1rem;
+}
+
+.task-box {
+    max-height: 10rem;
+    overflow: auto;
+}
+
+.checkList {
+    padding-left: 8rem;
+    text-align: left;
+    font-size: 1.5rem;
+}
+
+.checkList-items {
+    font-size: 5rem;
+}
+
+.task-btn-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: row wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.strike-task {
+    text-decoration: line-through;
+    opacity: 0.5;
+}

@@ -1,100 +1,65 @@
-import { useState, useEffect } from "react"
-import { imageUrl, imageAccessToken, weatherUrl, weatherAccessToken, userConfigs } from "./configs"
-import { saveAs } from 'file-saver'
-import './App.css';
+import './stylesheets/styles.css';
+
+import { MainSection } from "./components/main-section";
+import { TaskComponent } from "./components/task-section";
+import { WeatherComponent } from "./components/weather-section";
+import { VocabularyComponent } from "./components/vocabulary-section";
+import { QuoteComponent } from "./components/quote-section";
+import { SettingsComponent } from "./components/settings-section";
+import { BackgroundImageLoader } from "./components/background-image";
+
+import { useUserPreferences } from "./contexts/user-pref-context";
 
 function App() {
 
-    const [bgImage, setBgImage] = useState("");
-    const [currentDate, setCurrentDate] = useState("")
-    const [currentTime, setCurrentTime] = useState("");
-    const [greeting, setGreeting] = useState("");
-    const [coordinates, setCoordinates] = useState({ latitude: -1, longitude: -1 });
-    const [weather, setWeather] = useState({});
+    const { showSettingsPage, userSettingsPage, userPreferences } = useUserPreferences();
 
-    const getCurrentTime = () => {
-        setCurrentTime(() => new Date().toLocaleTimeString('en-US', {
-            hour12: true,
-            hour: "numeric",
-            minute: "numeric"
-        }));
-    }
-
-    const getGreeting = () => {
-        const hour = new Date().getHours();
-        if (hour > 0 && hour < 4) {
-            setGreeting("Time to sleep");
-        } else if (hour > 4 && hour < 12) {
-            setGreeting("Good Morning");
-        } else if (hour < 18) {
-            setGreeting("Good Afternoon");
+    if (showSettingsPage === true) {
+        return (
+            userSettingsPage()
+        );
+    } else {
+        if (userPreferences.showImage) {
+            const bgImage = BackgroundImageLoader();
+            console.log("Changing to Random Image");
+            document.body.style.cssText = `
+                background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bgImage});
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;`;
         } else {
-            setGreeting("Good Evening");
+            console.log("Changing to Gradient")
+            document.body.style.cssText = `
+                background: linear-gradient(-45deg, #e859da, #ee7752, #e73c7e, #23a6d5, #23d5ab, #23d56d);
+                background-size: 400% 400%;
+                animation: gradient 15s ease infinite;`;
         }
+
+        return (
+            <div className="App">
+                <section className="center-page">
+                    <MainSection />
+                    <TaskComponent />
+                </section>
+                
+                <section className="weather-section">
+                    {userPreferences.showWeather && <WeatherComponent />}
+                </section>
+
+                <section className="quote-section">
+                    {userPreferences.showQuote && <QuoteComponent />}
+                </section>
+
+                <section className="vocab-section">
+                    {userPreferences.showVocab && <VocabularyComponent />}
+                </section>
+
+                <section className="settings-section">
+                    <SettingsComponent />
+                </section>
+            </div>
+        );
     }
-
-    const getLocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } else {
-            setCoordinates({ latitude: -1, longitude: -1 });
-            console.log("Unable to determine location");
-        }
-    }
-
-
-    const showPosition = (position) => {
-        setCoordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-        console.log("Coordinates: ", position.coords.latitude, position.coords.longitude);
-    }
-
-    setInterval(getCurrentTime, 1000);
-    setInterval(getGreeting, 1000);
-
-    useEffect(() => getLocation(), []);
-
-    useEffect(() => {
-        async function getWeather() {
-            const res = await (await fetch(`${weatherUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${weatherAccessToken}`)).json();
-            // console.log(`${weatherUrl}lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=${userConfigs.units}&${weatherAccessToken}`)
-            console.log(res)
-            const location = res.name;
-            const currentTemperature = res.main.temp;
-            const currentHumidity = res.main.humidity;
-            const description = res.weather[0].description;
-            const icon = res.weather[0].icon;
-            setWeather({ location: location, temperature: currentTemperature, humidity: currentHumidity, description: description, icon: icon });
-        }
-        getWeather()
-    }, [])
-
-    // useEffect(() => {
-    //   async function getBgImage() {
-    //     const res = await (await fetch(`${imageUrl}?${accessToken}`)).json();
-    //     const imgUrl = res.urls.raw + "&w=1920&h=1080&dpr=2";
-    //     const description = res.description;
-    //     console.log(res);
-    //     console.log(imgUrl, description);
-    //   }
-    //   getBgImage()
-    // }, [])
-
-    return (
-        <div className="App">
-            <section className="center-page">
-                <h1>{currentTime}</h1>
-                <h2> {greeting}, {userConfigs.name} </h2>
-                <h3> What is your focus today?</h3>
-                <input className="focus-input" type="text" />
-            </section>
-            <section className="weather-section" tooltip={weather.description}>
-                <h4>{weather.location}</h4>
-                <h4>{weather.temperature}° {userConfigs.units === "metric" ? "C" : "F"}</h4>
-                <h4>{weather.humidity}% humidity</h4>
-                <span className="tooltip-text">{weather.description}</span>
-            </section>
-        </div>
-    );
 }
 
 export default App;

@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+<link href="src/stylesheets/markdown.css" rel="stylesheet">
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Lucid Chrome Extension
 
-## Available Scripts
+Lucid is a Chrome Extension that replaces the traditional new tab screen with a soothing welcoming screen. It has a task view that encourages user to take action and has some quality of life features like random inspirational quote, new vocabulary and instant weather conditions.
 
-In the project directory, you can run:
+The project is correctly under development and is set to introduce features later (see upcoming features list).
 
-### `npm start`
+The project was made in React and [Momentum Chrome Extension](https://chrome.google.com/webstore/detail/momentum/laookkfknpbbblfpciffpaejjkokdgca?hl=en) was the inspiration behind this project.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- No sign up required (its 2022, privacy is a feature 😝)
+- Shows a welcoming screen with local time and date
+- Ability to add tasks to focus for the session
+    - Multiple tasks can be added in one go by separating the tasks by semicolon (;)
+- Shows a random inspirational quote
+- Shows a random new vocabulary (definition and usage appears when you hover over the new word)
+- Shows the local weather condition (The app will request for your current location)
+- Shows a random background image (if turned off, you will see a lovely gradient of colors cycling through the screen)
+- Customizability - Any of the features mentioned above can be turned on/off at any point
 
-### `npm test`
+## Screens
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Home Screen](/screens/homescreen.png)
+<!-- {:.image--caption} -->
+<p class="image-caption">New tab screen </p>
 
-### `npm run build`
+![Adding Tasks](/screens/adding_tasks.png)
+![Displaying multiple tasks](/screens/listing_tasks.png)
+<p class="image-caption">Adding Multiple tasks and displaying the Tasks</p>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Completing the Task](/screens/completing_tasks.png)
+<p class="image-caption">Completing the Task</p>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Vocabulary feature on hover](/screens/vocab.png)
+<p class="image-caption">Also notice the quote, weather and vocab on the top, top-right and bottom-left corners respectively</p>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![Settings Page](/screens/settings.png)
+<p class="image-caption">Settings page to customize your Preferences</p>
 
-### `npm run eject`
+![Home Screen with Background Image](/screens/homescreen_bg.png)
+![Home Screen with Background Image and Tasks](/screens/listing_tasks_bg.png)
+<p class="image-caption">Home screen with background image</p>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Planned Features
+- Add a configurable Pomodoro Timer
+- Make the units on weather customizable
+- Set countdowns for events
+- Make the gradient colors customizable
+- Ability to manually set the weather location
