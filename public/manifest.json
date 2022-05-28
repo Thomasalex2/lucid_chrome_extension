@@ -1,8 +1,8 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Lucid Tab",
   "author": "Thomas Alex",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Replace Chrome new tab with beautiful Lucid Tab Screen",
   "icons": {
     "16": "Lucid_logo_16.png",

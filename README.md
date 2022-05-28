@@ -49,3 +49,4 @@ The project was made in React and [Momentum Chrome Extension](https://chrome.goo
 - Set countdowns for events
 - Make the gradient colors customizable
 - Ability to manually set the weather location
+- Give user the option to download the background image
